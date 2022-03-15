@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+html
+{
+    font-size: 16px;
+    /* background: #1e1a20; */
+}
+body { 
+    color: #ffffff;
+}
+
+h1, h2 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+}
+p {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+}
+h1 {
+    font-size: 12vmin;
+    text-align: right;
+}
+@media screen and (min-width: 767.5px) {
+    h1 {
+        font-size: 8vmax;
+    }
+}
+.text-bold {
+    font-weight: 700;
+}
+
+.main-container {
+    position: relative;
+}
+.main-container::after {
+    background: linear-gradient(to top, #1d48d4, #16214d );
+    content: '';
+    display: block;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+h1 span {
+    display: block;
+}
+h1 span + span {
+    font-size: 0.5em;
+    margin-top: 0.25em;
+}
+
+h1, h2 {
+    color: #ffffff;
+}
+
+figcaption,
+p {
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: 100;
+    text-transform: none;
+    letter-spacing: 0.025em;
+    line-height: 1.3em;
+}
+p + p {
+    margin-top: 25px;
+}
+div {
+    max-width: 500px;
+}
+.webgl
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+
+.section
+{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    position: relative;
+    font-family: 'Cabin', sans-serif;
+    color: #ffeded;
+    text-transform: uppercase;
+    font-size: 7vmin;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+@media screen and (min-width: 767.5px) {
+    .section {
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+}
+
+section:nth-child(odd)
+{
+    justify-content: flex-end;
+}
+
+.intro {
+    height: 100vh;
+}
+.about {
+    padding-bottom: 120px;
+    padding-top: 120px;
+}
+.text {
+    overflow: hidden;
+}
+@media screen and (min-width: 767.5px) {
+    .about {
+        padding-bottom: 120px;
+        padding-top: 120px;
+    }
+}
+
+.store {
+    max-width: 100%;
+    margin: 80px auto 120px;
+    max-width: 1100px;
+    width: 100%;
+}
+.store .item {
+    font-size: clamp(16px, 0.5em, 1em);
+    max-width: 100%;
+    margin-top: 1.15em;
+    padding: 0 0.75em;
+    display: flex;
+    justify-content: space-between;
+} 
+.store .item + .item {
+    border-top: 2px solid #fff;
+    padding-top: 1.15em;
+}
+.button {
+    background: #000;
+    cursor: pointer;
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(16px, 0.5em, 1em);
+    text-align: center;
+    margin: 2em 0 0;
+    padding: .75em 0.5em;
+    position: relative;
+    text-decoration: none;
+}
+.button span {
+    color: #fff;
+    mix-blend-mode: exclusion;
+    position: relative;
+    z-index: 2;
+}
+.button::after {
+    background: #fff;
+    content: '';
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    transition: 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+}
+.button:hover::after {
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+
+@media screen and (min-width: 767.5px) {
+    .store {
+        margin: 200px auto;
+        /* border: 2px solid #fff; */
+    }
+    .store .item {
+        padding: 0 0.75em;
+    }
+}
+
+.large-text {
+    font-size: 30vmin;
+    left: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: auto;
+}
+
+/* parfums gallery */
+figure {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+figcaption {
+    bottom: 5px;
+    color: #2d2d2d;
+    left: 0;
+    margin: 0;
+    padding: 0 8px;
+    position: absolute;
+    width: 100%;
+}
+img {
+    display: block;
+    height: auto;
+    width: 100%;
+}
+.large-text,
+.description,
+figure, 
+figure img {
+    will-change: transform;
+}
+
+/* footer */
+footer {
+    /* background: #fff; */
+    padding: 100px 10% 20px;
+}
