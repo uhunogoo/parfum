@@ -11,7 +11,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 /**
  * Debug
  */
-const gui = new dat.GUI()
+// const gui = new dat.GUI()
 
 const parameters = {
     time: 0,
@@ -188,31 +188,31 @@ gltfLoader.load(
         group.children[0].position.set( lidPosition.x, lidPosition.y, lidPosition.z )
 
         // debug Color
-        gui
-            .addColor(parameters, 'blueColor')
-            .onChange(() =>
-            {
-                bottle.material.color.set(parameters.blueColor)
-            })
-        gui
-            .addColor(parameters, 'blackMaterialColor')
-            .onChange(() =>
-            {
-                lid.material.color.set(parameters.blackMaterialColor)
-                button.material.color.set(parameters.blackMaterialColor)
-            })
-        gui
-            .addColor(parameters, 'whiteColor')
-            .onChange(() =>
-            {
-                dozator.material.color.set(parameters.whiteColor)
-            })
-        gui
-            .add(bottle.material, 'roughness').name('bottle roughness').min(0).max(1).step(0.0001)
-        gui
-            .add(lid.material, 'roughness').name('lid roughness').min(0).max(1).step(0.0001)
-        gui
-            .add(button.material, 'roughness').name('button roughness').min(0).max(1).step(0.0001)
+        // gui
+        //     .addColor(parameters, 'blueColor')
+        //     .onChange(() =>
+        //     {
+        //         bottle.material.color.set(parameters.blueColor)
+        //     })
+        // gui
+        //     .addColor(parameters, 'blackMaterialColor')
+        //     .onChange(() =>
+        //     {
+        //         lid.material.color.set(parameters.blackMaterialColor)
+        //         button.material.color.set(parameters.blackMaterialColor)
+        //     })
+        // gui
+        //     .addColor(parameters, 'whiteColor')
+        //     .onChange(() =>
+        //     {
+        //         dozator.material.color.set(parameters.whiteColor)
+        //     })
+        // gui
+        //     .add(bottle.material, 'roughness').name('bottle roughness').min(0).max(1).step(0.0001)
+        // gui
+        //     .add(lid.material, 'roughness').name('lid roughness').min(0).max(1).step(0.0001)
+        // gui
+        //     .add(button.material, 'roughness').name('button roughness').min(0).max(1).step(0.0001)
            
         scene.add( group )
 
@@ -351,8 +351,8 @@ const largeTextScrollDistance =  sizes.width - largeText.clientWidth
 gsap.to(largeText, {
     x: largeTextScrollDistance,
     scrollTrigger: {
-        start: 'top ' + sizes.height * 0.6,
-        end: 'top ' + sizes.height * 0.1,
+        start: 'top ' + sizes.height * 0.65,
+        end: 'top ' + sizes.height * 0.25,
         trigger: largeText,
         scrub: 2
     },

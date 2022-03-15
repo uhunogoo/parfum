@@ -195,11 +195,15 @@ section:nth-child(odd)
 }
 
 .large-text {
-    font-size: 30vmin;
+    font-size: 40vmin;
     left: 0;
     position: absolute;
     white-space: nowrap;
-    width: auto;
+}
+@media screen and (min-width: 767.5px) {
+    .large-text {
+        font-size: 30vmin;
+    }
 }
 
 /* parfums gallery */
