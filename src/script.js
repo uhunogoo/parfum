@@ -1,6 +1,5 @@
 import './style.css'
 import * as THREE from 'three'
-import * as dat from 'lil-gui'
 import gsap from 'gsap'
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
@@ -8,10 +7,6 @@ gsap.registerPlugin(ScrollTrigger)
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
-/**
- * Debug
- */
-// const gui = new dat.GUI()
 
 const parameters = {
     time: 0,
@@ -21,6 +16,7 @@ const parameters = {
     clearColor: '#1d48d4'
 }
 
+
 /**
  * Sizes
  */
@@ -28,6 +24,7 @@ const parameters = {
     width: window.innerWidth,
     height: window.innerHeight
 }
+
 
 /**
  * Base
@@ -37,6 +34,7 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
+
 
 /**
  * Lights
@@ -48,6 +46,7 @@ const scene = new THREE.Scene()
  
  const ambientLight = new THREE.AmbientLight('#ffffff', 0.5)
  scene.add(light1, light2, ambientLight)
+
 
 /**
  * Loaders
@@ -186,37 +185,11 @@ gltfLoader.load(
         group.rotation.set( Math.PI * 0.5, Math.PI * 1.75, 0 )
         group.position.set( 0, 0, 4 )
         group.children[0].position.set( lidPosition.x, lidPosition.y, lidPosition.z )
-
-        // debug Color
-        // gui
-        //     .addColor(parameters, 'blueColor')
-        //     .onChange(() =>
-        //     {
-        //         bottle.material.color.set(parameters.blueColor)
-        //     })
-        // gui
-        //     .addColor(parameters, 'blackMaterialColor')
-        //     .onChange(() =>
-        //     {
-        //         lid.material.color.set(parameters.blackMaterialColor)
-        //         button.material.color.set(parameters.blackMaterialColor)
-        //     })
-        // gui
-        //     .addColor(parameters, 'whiteColor')
-        //     .onChange(() =>
-        //     {
-        //         dozator.material.color.set(parameters.whiteColor)
-        //     })
-        // gui
-        //     .add(bottle.material, 'roughness').name('bottle roughness').min(0).max(1).step(0.0001)
-        // gui
-        //     .add(lid.material, 'roughness').name('lid roughness').min(0).max(1).step(0.0001)
-        // gui
-        //     .add(button.material, 'roughness').name('button roughness').min(0).max(1).step(0.0001)
            
         scene.add( group )
 
         const globalTL = gsap.timeline({
+            paused: true,
             scrollTrigger: {
                 trigger: '.main-container',
                 scrub: 2.5,
@@ -245,9 +218,6 @@ window.addEventListener('resize', () =>
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-    // update scroll for geometry
-    // scrollAnimation()
 })
 
 /**
