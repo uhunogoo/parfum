@@ -67,17 +67,23 @@ h1, h2 {
 figcaption,
 p {
     color: #ffffff;
-    font-size: 1.3rem;
+    font-size: max(16px, 2vmin);
     font-weight: 100;
     text-transform: none;
     letter-spacing: 0.025em;
-    line-height: 1.3em;
+    line-height: max(16px, 2vmin);
 }
 p + p {
     margin-top: 25px;
 }
-div {
-    max-width: 500px;
+.description {
+    width: 100%;
+}
+@media screen and (min-width: 767.5px) {
+    .description {
+        width: 40%;
+        min-width: 500px;
+    }
 }
 .webgl
 {
@@ -118,24 +124,27 @@ section:nth-child(odd)
     height: 100vh;
 }
 .about {
-    padding-bottom: 120px;
-    padding-top: 120px;
+    padding-bottom: 17vmin;
+    padding-top: 12vmin;
 }
 .text {
     overflow: hidden;
 }
 @media screen and (min-width: 767.5px) {
     .about {
-        padding-bottom: 120px;
-        padding-top: 120px;
+        padding-bottom: 13vmin;
+        padding-top: 9vmin;
     }
 }
 
 .store {
-    max-width: 100%;
     margin: 80px auto 120px;
-    max-width: 1100px;
     width: 100%;
+}
+@media screen and (min-width: 767.5px) {
+    .store {
+        width: 80%;
+    }
 }
 .store .item {
     font-size: clamp(16px, 0.5em, 1em);
@@ -186,7 +195,7 @@ section:nth-child(odd)
 
 @media screen and (min-width: 767.5px) {
     .store {
-        margin: 200px auto;
+        margin: 8vmax auto;
         /* border: 2px solid #fff; */
     }
     .store .item {
@@ -227,7 +236,7 @@ img {
     width: 100%;
 }
 .large-text,
-.description,
+.item,
 figure, 
 figure img {
     will-change: transform;

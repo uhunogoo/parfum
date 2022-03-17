@@ -25,6 +25,15 @@ const app = () => {
         height: window.innerHeight
     }
 
+    /**
+     * Large text animation 
+     */
+    const largeText = document.querySelector('.large-text')
+    let largeTextScrollDistance =  sizes.width - largeText.scrollWidth
+    // const largeTextAnimation = () => {
+        
+    // }
+    // largeTextAnimation()
 
     /**
      * Base
@@ -59,12 +68,12 @@ const app = () => {
      * Scroll
      */
     const scrollAnimation = (globalTL) => {
-        const globalTlSize = globalTL.getChildren(false)
-        if ( globalTlSize.length ) {
-            globalTL.play( 0 ).pause( globalTL.time() )
-            globalTL.remove( globalTlSize[0] ).pause(globalTL.time()).reverse()
-            globalTL.play( globalTL.time() ).pause()
-        }
+        // const globalTlSize = globalTL.getChildren(false)
+        // if ( globalTlSize.length ) {
+        //     globalTL.play( 0 ).pause( globalTL.time() )
+        //     globalTL.remove( globalTlSize[0] ).pause(globalTL.time()).reverse()
+        //     globalTL.play( globalTL.time() ).pause()
+        // }
 
         // animate geometry
         const sectionDuration = 1
@@ -196,11 +205,9 @@ const app = () => {
                     start: 'top top',
                     end: 'bottom bottom',
                     invalidateOnRefresh: true,
-                    onRefresh: () => {
-                        scrollAnimation(globalTL)
-                    }
                 },
             })
+            scrollAnimation(globalTL)
         }
     )
 
@@ -218,6 +225,9 @@ const app = () => {
         // Update renderer
         renderer.setSize(sizes.width, sizes.height)
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+        // Update function
+        largeTextScrollDistance = sizes.width - largeText.scrollWidth
     })
 
     /**
@@ -316,18 +326,18 @@ const app = () => {
     })
 
     // animate text parts
-    const largeText = document.querySelector('.large-text')
-    const largeTextScrollDistance =  sizes.width - largeText.scrollWidth
-
-    gsap.to(largeText, {
-        x: largeTextScrollDistance,
+    gsap.fromTo(largeText, {x: 0}, {
+        x: () => largeTextScrollDistance,
+        paused: true,
         scrollTrigger: {
             start: 'top ' + sizes.height * 0.65,
             end: 'top ' + sizes.height * 0.25,
             trigger: largeText,
+            invalidateOnRefresh: true,
             scrub: 2
         },
     })
+
 
     gsap.set('.description', {y: sizes.height * 0.1})
     gsap.to('.description', {
