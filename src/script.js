@@ -29,11 +29,7 @@ const app = () => {
      * Large text animation 
      */
     const largeText = document.querySelector('.large-text')
-    let largeTextScrollDistance =  sizes.width - largeText.scrollWidth
-    // const largeTextAnimation = () => {
-        
-    // }
-    // largeTextAnimation()
+    let largeTextScrollDistance = sizes.width - largeText.scrollWidth
 
     /**
      * Base
@@ -67,19 +63,22 @@ const app = () => {
     /**
      * Scroll
      */
-    const scrollAnimation = (globalTL) => {
-        // const globalTlSize = globalTL.getChildren(false)
-        // if ( globalTlSize.length ) {
-        //     globalTL.play( 0 ).pause( globalTL.time() )
-        //     globalTL.remove( globalTlSize[0] ).pause(globalTL.time()).reverse()
-        //     globalTL.play( globalTL.time() ).pause()
-        // }
+    const scrollAnimation = () => {
 
         // animate geometry
         const sectionDuration = 1
         let delay = 0 
 
         const tl = gsap.timeline({
+            paused: true,
+            scrollTrigger: {
+                scroller: '#viewport',
+                trigger: '.wrapper',
+                scrub: 2.5,
+                start: 'top top',
+                end: 'bottom bottom',
+                invalidateOnRefresh: true,
+            },
             defaults: {duration: sectionDuration, ease: 'power2.inOut'}
         })
 
@@ -128,7 +127,6 @@ const app = () => {
             y: - Math.PI * 2.5
         }, delay)
         
-        globalTL.add( tl )
         
         // add to gloabal timeline
     }
@@ -197,17 +195,7 @@ const app = () => {
             
             scene.add( group )
 
-            const globalTL = gsap.timeline({
-                paused: true,
-                scrollTrigger: {
-                    trigger: '.main-container',
-                    scrub: 2.5,
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    invalidateOnRefresh: true,
-                },
-            })
-            scrollAnimation(globalTL)
+            scrollAnimation()
         }
     )
 
@@ -300,26 +288,25 @@ const app = () => {
 
 
     // gallery animation
-    const items = gsap.utils.toArray('.item')
+    const items = gsap.utils.toArray('.store *')
+
     // define constatns
     items.forEach( (el, i) => {
 
         const tl = gsap.timeline({
             scrollTrigger: {
+                scroller: '#viewport',
                 ease: "power3.inOut",
                 end: 'top ' + sizes.height * 0.95,
                 trigger: el,
                 scrub: 2
             },
         })
-
-        // set base parameters
-        gsap.set(el, {y: '120%', opacity: 0})
         
         // animate timeline
-        tl.to(el, {
-            scale: 1,
+        tl.fromTo(el, { y: '120%', opacity: 0, scale: 1.1 }, {
             y: 0,
+            scale: 1,
             opacity: 1,
             delay: i / 10
         }, 0)
@@ -330,6 +317,7 @@ const app = () => {
         x: () => largeTextScrollDistance,
         paused: true,
         scrollTrigger: {
+            scroller: '#viewport',
             start: 'top ' + sizes.height * 0.65,
             end: 'top ' + sizes.height * 0.25,
             trigger: largeText,
@@ -338,17 +326,16 @@ const app = () => {
         },
     })
 
-
-    gsap.set('.description', {y: sizes.height * 0.1})
-    gsap.to('.description', {
+    gsap.fromTo('.description', { y: sizes.height * 0.1 }, {
         y: -sizes.height * 0.4,
         scrollTrigger: {
+            scroller: '#viewport',
             start: 'top bottom',
             end: 'bottom top',
             trigger: '.description',
             ease: 'power1,inOut',
             scrub: 1,
-        },
+        }
     })
 }
 

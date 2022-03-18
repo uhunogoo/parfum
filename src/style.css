@@ -1,5 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+:root {
+    --lightColor: rgba(0, 0, 0, 0.1);
+    --darkColor: rgba(0, 0, 0, 1);
+}
+
+body,
+html {
+	height: 100vh;
+	width: 100vw;
+	overscroll-behavior: none;
+	overflow: hidden;
+}
+#viewport {
+	position: fixed;
+	overflow-y: scroll;
+    min-height: 100px;
+	height: 100vh;
+	width: 100%;
+	-webkit-overscroll-behavior: none;
+	overscroll-behavior: none;
+	-webkit-overflow-scrolling: touch;
+    scrollbar-width: tin;
+    scrollbar-color: dark/*fancy colors for Firefox*/
+}
+
 
 *
 {
@@ -10,9 +35,9 @@
 html
 {
     font-size: 16px;
-    /* background: #1e1a20; */
 }
 body { 
+    background: linear-gradient(to top, #1d48d4, #16214d );
     color: #ffffff;
 }
 
@@ -37,19 +62,9 @@ h1 {
     font-weight: 700;
 }
 
+.wrapper,
 .main-container {
     position: relative;
-}
-.main-container::after {
-    background: linear-gradient(to top, #1d48d4, #16214d );
-    content: '';
-    display: block;
-    height: 100vh;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: -1;
 }
 
 h1 span {
@@ -89,7 +104,7 @@ p + p {
 {
     position: fixed;
     top: 0;
-    left: 0;
+    left: -11px;
     outline: none;
 }
 
@@ -154,9 +169,9 @@ section:nth-child(odd)
     display: flex;
     justify-content: space-between;
 } 
-.store .item + .item {
-    border-top: 2px solid #fff;
-    padding-top: 1.15em;
+.store .item:not(.item:last-of-type) {
+    border-bottom: 2px solid #fff;
+    padding-bottom: 1.15em;
 }
 .button {
     background: #000;
