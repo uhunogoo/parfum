@@ -21,7 +21,7 @@ const app = () => {
      * Sizes
      */
     const sizes = {
-        width: window.innerWidth,
+        width: document.documentElement.clientWidth,
         height: window.innerHeight
     }
 
@@ -202,20 +202,22 @@ const app = () => {
 
     window.addEventListener('resize', () =>
     {
-        // Update sizes
-        sizes.width = window.innerWidth
-        sizes.height = window.innerHeight
-
-        // Update camera
-        camera.aspect = sizes.width / sizes.height
-        camera.updateProjectionMatrix()
-
-        // Update renderer
-        renderer.setSize(sizes.width, sizes.height)
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
-        // Update function
-        largeTextScrollDistance = sizes.width - largeText.scrollWidth
+        if (sizes.width !== document.documentElement.clientWidth) {
+            // Update sizes
+            sizes.width = document.documentElement.clientWidth
+            sizes.height = window.innerHeight
+    
+            // Update camera
+            camera.aspect = sizes.width / sizes.height
+            camera.updateProjectionMatrix()
+    
+            // Update renderer
+            renderer.setSize(sizes.width, sizes.height)
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    
+            // Update function
+            largeTextScrollDistance = sizes.width - largeText.scrollWidth
+        }
     })
 
     /**
@@ -288,7 +290,7 @@ const app = () => {
 
 
     // gallery animation
-    const items = gsap.utils.toArray('.store *')
+    const items = gsap.utils.toArray('.store .elemnt')
 
     // define constatns
     items.forEach( (el, i) => {
@@ -312,20 +314,28 @@ const app = () => {
         }, 0)
     })
 
-    // animate text parts
-    gsap.fromTo(largeText, {x: 0}, {
-        x: () => largeTextScrollDistance,
+    /**
+     * text animation
+     */
+    // large title
+    const largeTextTl = gsap.timeline({
         paused: true,
         scrollTrigger: {
             scroller: '#viewport',
-            start: 'top ' + sizes.height * 0.65,
+            start: 'top ' + sizes.height * 0.75,
             end: 'top ' + sizes.height * 0.25,
             trigger: largeText,
-            invalidateOnRefresh: true,
             scrub: 2
         },
     })
+    largeTextTl.fromTo(largeText, {x: 0}, {
+        x: '100%',
+    },)
+    largeTextTl.fromTo('.large-text span', {x: 0}, {
+        x: '-100%',
+    }, '<')
 
+    // description text animation
     gsap.fromTo('.description', { y: sizes.height * 0.1 }, {
         y: -sizes.height * 0.4,
         scrollTrigger: {

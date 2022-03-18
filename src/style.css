@@ -7,7 +7,7 @@
 
 body,
 html {
-	height: 100vh;
+	height: 100%;
 	width: 100vw;
 	overscroll-behavior: none;
 	overflow: hidden;
@@ -102,9 +102,10 @@ p + p {
 }
 .webgl
 {
+    
     position: fixed;
     top: 0;
-    left: -11px;
+    left: 0;
     outline: none;
 }
 
@@ -144,6 +145,8 @@ section:nth-child(odd)
 }
 .text {
     overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
 }
 @media screen and (min-width: 767.5px) {
     .about {
@@ -220,7 +223,17 @@ section:nth-child(odd)
 
 .large-text {
     font-size: 40vmin;
+    height: 100%;
     left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+.large-text span{
+    display: block;
+    height: 100%;
+    left: 0;
+    line-height: 0.6;
     position: absolute;
     white-space: nowrap;
 }
@@ -251,6 +264,7 @@ img {
     width: 100%;
 }
 .large-text,
+.large-text span,
 .item,
 figure, 
 figure img {
