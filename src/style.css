@@ -36,9 +36,20 @@ html
 {
     font-size: 16px;
 }
-body { 
-    background: linear-gradient(to top, #1d48d4, #16214d );
+body {
     color: #ffffff;
+} 
+body::before { 
+    background: linear-gradient(to top, #1d48d4, #16214d );
+    content: '';
+    display: block;
+    position: fixed;
+
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+
 }
 
 h1, h2 {
