@@ -322,10 +322,17 @@ const app = () => {
         paused: true,
         scrollTrigger: {
             scroller: '#viewport',
-            start: 'top ' + sizes.height * 0.75,
-            end: 'top ' + sizes.height * 0.25,
+            start: () => {
+                const scale = (sizes.width > 767) ? 0.75 : 0.85
+                return 'top ' + sizes.height * scale
+            },
+            end: () => {
+                const scale = (sizes.width > 767) ? 0.25 : 0.5
+                return 'top ' + sizes.height * scale
+            },
             trigger: largeText,
-            scrub: 2
+            scrub: 2,
+            invalidateOnRefresh: true
         },
     })
     largeTextTl.fromTo(largeText, {x: 0}, {

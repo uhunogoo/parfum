@@ -123,6 +123,9 @@ p + p {
     padding-left: 15px;
     padding-right: 15px;
 }
+.section_last {
+    overflow: hidden;
+}
 
 @media screen and (min-width: 767.5px) {
     .section {
@@ -271,8 +274,3 @@ figure img {
     will-change: transform;
 }
 
-/* footer */
-footer {
-    /* background: #fff; */
-    padding: 100px 10% 20px;
-}
