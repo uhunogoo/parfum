@@ -67,12 +67,15 @@ h1 {
     position: relative;
 }
 
-h1 span {
+h1 .row {
     display: block;
 }
-h1 span + span {
+h1 .row + .row {
     font-size: 0.5em;
     margin-top: 0.25em;
+}
+h1 .row span {
+    display: inline-block;
 }
 
 h1, h2 {
@@ -266,6 +269,8 @@ img {
     height: auto;
     width: 100%;
 }
+
+h1 .row span,
 .large-text,
 .large-text span,
 .item,

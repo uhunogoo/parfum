@@ -354,6 +354,40 @@ const app = () => {
             scrub: 1,
         }
     })
+
+    // head title in animation
+    const headerTitle = document.querySelector('.intro h1')
+    const headerTitle_rows = [...headerTitle.children]
+    headerTitle_rows.forEach((titleRow) => {
+        const text = titleRow.textContent.split(' ')
+        // cleanUp
+        titleRow.innerHTML = ''
+
+        // wrap wrods to span
+        text.forEach((el, i) => {
+            const span = document.createElement('span')
+            const newText = (i !== 0) ? `&nbsp${el}` : `${el}`
+            span.insertAdjacentHTML('beforeend', newText)
+            console.log(el);
+            titleRow.appendChild(span)
+        })
+    })
+    // animation title part 
+    gsap.fromTo('h1 .row span', 
+        {
+            y: 100,
+            opacity: 0,
+            skewY: '15deg' 
+        }, {
+            y: 0,
+            opacity: 1,
+            skewY: 0,
+            stagger: {
+                each: 0.07,
+
+            }
+
+    })
 }
 
 
