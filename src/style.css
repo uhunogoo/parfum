@@ -18,11 +18,7 @@ html {
     min-height: 100px;
 	height: 100vh;
 	width: 100%;
-	-webkit-overscroll-behavior: none;
-	overscroll-behavior: none;
-	-webkit-overflow-scrolling: touch;
-    scrollbar-width: tin;
-    scrollbar-color: dark/*fancy colors for Firefox*/
+	z-index: 1;
 }
 
 
@@ -261,27 +257,10 @@ section:nth-child(odd)
 }
 
 /* parfums gallery */
-figure {
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-}
-figcaption {
-    bottom: 5px;
-    color: #2d2d2d;
-    left: 0;
-    margin: 0;
-    padding: 0 8px;
-    position: absolute;
-    width: 100%;
-}
-img {
-    display: block;
-    height: auto;
-    width: 100%;
-}
 
 h1 .row span,
+.button,
+.description,
 .large-text,
 .large-text span,
 .item,
@@ -290,3 +269,35 @@ figure img {
     will-change: transform;
 }
 
+.preload {
+    background: #000;
+    display: grid;
+    height: 100vh;
+    place-items: center;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+}
+.preload__title {
+    position: relative;
+    mix-blend-mode: exclusion;
+    font-size: 25vmin;
+    line-height: 0.75;
+}
+.preload__title .bottom,
+.preload__title .top {
+    position: relative;
+    overflow: hidden;
+}
+.preload__title .row span {
+    padding: 0.1em 0;
+}
+.preload__title span {
+    display: inline-block;
+    color: #fff;
+    mix-blend-mode: exclusion;
+}
+.webgl {
+    pointer-events: none;
+    z-index: 0;
+}

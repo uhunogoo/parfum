@@ -6,6 +6,29 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 gsap.registerPlugin(ScrollTrigger)
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+/**
+ * split text and wrap to span
+ * @param {parentTag} parent tag with the text 
+ * @returns parent tag with wraped text
+ */
+const splitAndWrapText = (parentTag) => {
+    const text = parentTag.textContent.split(' ')
+    
+    if( !text.length ) return
+    
+    // cleanUp
+    parentTag.innerHTML = ''
+
+    // wrap wrods to span
+    text.forEach((el, i) => {
+        const span = document.createElement('span')
+        const newText = (i !== 0) ? `&nbsp${el}` : `${el}`
+        span.insertAdjacentHTML('beforeend', newText)
+        parentTag.appendChild(span)
+    })
+
+    return parentTag
+}
 
 const app = () => {
     const parameters = {
@@ -354,44 +377,101 @@ const app = () => {
             scrub: 1,
         }
     })
+}
 
+const preloader = () => {
     // head title in animation
     const headerTitle = document.querySelector('.intro h1')
     const headerTitle_rows = [...headerTitle.children]
     headerTitle_rows.forEach((titleRow) => {
-        const text = titleRow.textContent.split(' ')
-        // cleanUp
-        titleRow.innerHTML = ''
-
-        // wrap wrods to span
-        text.forEach((el, i) => {
-            const span = document.createElement('span')
-            const newText = (i !== 0) ? `&nbsp${el}` : `${el}`
-            span.insertAdjacentHTML('beforeend', newText)
-            console.log(el);
-            titleRow.appendChild(span)
-        })
+        splitAndWrapText(titleRow)
     })
-    // animation title part 
-    gsap.fromTo('h1 .row span', 
+    gsap.set('h1 .row span', { y: 100, opacity: 0, skewY: '10deg' })
+
+
+    const preloadTitle = document.querySelector('.preload__title') 
+    gsap.utils.toArray('.preload__title .row').forEach(el => {
+        // wrap title contetnt to span
+        splitAndWrapText( el )
+    })
+
+    const preloadTL = gsap.timeline()
+    preloadTL.fromTo('.preload__title .top', 
         {
-            y: 100,
-            opacity: 0,
-            skewY: '15deg' 
+            yPercent: 100
         }, {
-            y: 0,
-            opacity: 1,
-            skewY: 0,
-            stagger: {
-                each: 0.07,
+            yPercent: 0,
+            ease: 'back.out',
+        }, 1
+    )
+    preloadTL.fromTo('.preload__title .bottom', 
+        {
+            yPercent: -100
+        }, {
+            yPercent: 0,
+            ease: 'back.out',
+        }, 1
+    )
+    preloadTL.fromTo('.preload__title .row', 
+        {
+            scale: 0.9
+        }, {
+            scale: 1,
+            ease: 'back.out',
+        }, 1
+    )
 
-            }
-
-    })
+    preloadTL.fromTo('.preload__title .bottom', 
+        {
+            xPercent: 0
+        }, {
+            xPercent: 100,
+            opacity: 0,
+            duration: 2,
+            ease: 'back.out',
+        }
+    )
+    preloadTL.fromTo('.preload__title .top', 
+        {
+            xPercent: 0
+        }, {
+            xPercent: -100,
+            opacity: 0,
+            duration: 2,
+            ease: 'back.out',
+        }, '<'
+    )
+    preloadTL.to('.preload__title .center', {
+            scale: 1.1,
+            duration: 2,
+            ease: 'pwer4.out',
+        }, '<'
+    )
+    preloadTL.fromTo('.preload',
+        {
+            clipPath: 'circle(120% at 50% 50%)',
+            filter: () => 'blur(0)'
+        }, {
+            clipPath: 'circle(0% at 50% -30%)',
+            filter: () => 'blur(0.4em)',
+            ease: 'power4.out',
+            duration: 1.4,
+        }
+    )
+    preloadTL.to('h1 .row span', {
+        y: 0,
+        opacity: 1,
+        skewY: 0,
+        ease: 'power3',
+        stagger: {
+            each: 0.05,
+        }
+    }, '>-=120%')
 }
 
 
 // RUN ON PAGE LOAD
 document.addEventListener("DOMContentLoaded", function() {
+    preloader()
     app()
 });
