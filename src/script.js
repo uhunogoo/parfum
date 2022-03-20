@@ -114,13 +114,13 @@ const preloader = (model) => {
     preloadTL.to('.preload__title .center .child', {
             filter: () => 'blur(0.3em)',
             opacity: 0,
-            duration: 0.8,
+            duration: 0.6,
             stagger: {
-                ease: 'circ.inOut',
-                each: 0.2,
+                ease: 'power1.inOut',
+                each: 0.12,
                 from: 'start'
             }
-        }, '<90%'
+        }, '<50%'
     )
     preloadTL.fromTo('.preload',
         {
@@ -139,17 +139,17 @@ const preloader = (model) => {
         skewY: 0,
         ease: 'circ.out',
         stagger: {
-            each: 0.05,
+            each: 0.03,
         }
     }, '<30%')
     preloadTL.from(model.position, {
-        z: 4.47,
+        z: 4.14,
         duration: 1.2,
         ease: 'circ.inOut',
     }, '<')
     preloadTL.from(model.rotation, {
         y: 0,
-        duration: 1.2,
+        duration: 1.4,
         ease: 'circ.inOut',
     }, '<')
 }
@@ -338,7 +338,7 @@ const app = () => {
             group.rotation.set( Math.PI * 0.5, Math.PI * 1.75, 0 )
             group.position.set( 0, 0, 4 )
             group.children[0].position.set( lidPosition.x, lidPosition.y, lidPosition.z )
-            
+
             scene.add( group )
 
             scrollAnimation()
@@ -504,7 +504,7 @@ const app = () => {
 
 
 // RUN ON PAGE LOAD
-document.addEventListener("DOMContentLoaded", function() {
+window.addEventListener("load", () => {
     preloadSetter()
     app()
 });
