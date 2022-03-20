@@ -22,12 +22,136 @@ const splitAndWrapText = (parentTag) => {
     // wrap wrods to span
     text.forEach((el, i) => {
         const span = document.createElement('span')
+        span.setAttribute('class', 'child')
         const newText = (i !== 0) ? `&nbsp${el}` : `${el}`
         span.insertAdjacentHTML('beforeend', newText)
         parentTag.appendChild(span)
     })
 
     return parentTag
+}
+const preloadSetter =() => {
+    // head title in animation
+    const headerTitle = document.querySelector('.intro h1')
+    const headerTitle_rows = [...headerTitle.children]
+    headerTitle_rows.forEach((titleRow) => {
+        splitAndWrapText(titleRow)
+    })
+    gsap.set('h1 .row span', { y: 100, opacity: 0, skewY: '10deg' })
+
+    gsap.utils.toArray('.preload__title .row').forEach(el => {
+        // wrap title contetnt to span
+        splitAndWrapText( el )
+    })
+
+    gsap.set('.preload__title .center .child', {
+        filter: () => 'blur(0.3em)',
+        opacity: 0
+    })
+}
+const preloader = (model) => {
+    
+
+    function blendEases(startEase, endEase, blender) {
+        var parse = function(ease) {
+                return typeof(ease) === "function" ? ease : gsap.parseEase("power4.inOut");
+            },
+            s = gsap.parseEase(startEase),
+            e = gsap.parseEase(endEase),
+            blender = parse(blender);
+        return function(v) {
+          var b = blender(v);
+          return s(v) * (1 - b) + e(v) * b;
+        };
+    }
+    
+    const preloadTL = gsap.timeline({
+        onComplete: () => {
+            const mainContent = document.getElementById('viewport')
+            const placeholder = document.querySelector('.preload')
+
+            placeholder.classList.add('preload_played')
+            mainContent.classList.add('active')
+        }
+    })
+    preloadTL.to('.preload__title .center .child', {
+            filter: () => 'blur(0em)',
+            opacity: 1,
+            duration: 0.6,
+            stagger: {
+                ease: 'power4.inOut',
+                each: 0.04,
+                from: 'end'
+            }
+        }, 0.5
+    )
+    preloadTL.fromTo('.preload__title .center .child', 
+        {
+            scaleY: 1,
+        }, {
+            repeat: 1,
+            yoyo: true,
+            scaleY: 3.8,
+            ease: blendEases("power4.inOut", "circ.inOut"),
+            duration: .6,
+            stagger: {
+                each: 0.04,
+                from: 'start'
+            }
+        }, '<18%'
+    )
+    preloadTL.fromTo('.preload__title .center', 
+        {
+            scaleX: 1,
+        }, {
+            repeat: 1,
+            yoyo: true,
+            scaleX: 1.4,
+            ease: blendEases("back.inOut(4.5)", "circ.inOut"),
+            duration: .6,
+        }, '<15%'
+    )
+    preloadTL.to('.preload__title .center .child', {
+            filter: () => 'blur(0.3em)',
+            opacity: 0,
+            duration: 0.8,
+            stagger: {
+                ease: 'circ.inOut',
+                each: 0.2,
+                from: 'start'
+            }
+        }, '<90%'
+    )
+    preloadTL.fromTo('.preload',
+        {
+            clipPath: 'polygon(0% 0%, 100% 0%, 100% 150%, 0% 200%)',
+            filter: () => 'blur(0)'
+        }, {
+            clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
+            filter: () => 'blur(0.4em)',
+            ease: 'power4.out',
+            duration: 1.4,
+        }, '<70%'
+    )
+    preloadTL.to('h1 .row span', {
+        y: 0,
+        opacity: 1,
+        skewY: 0,
+        ease: 'circ.out',
+        stagger: {
+            each: 0.05,
+        }
+    }, '<30%')
+    preloadTL.from(model.position, {
+        z: 4.47,
+        duration: 1.2,
+        ease: 'circ.inOut',
+    }, '<')
+    preloadTL.from(model.rotation, {
+        y: 0,
+        duration: 1.2,
+        ease: 'circ.inOut',
+    }, '<')
 }
 
 const app = () => {
@@ -52,7 +176,6 @@ const app = () => {
      * Large text animation 
      */
     const largeText = document.querySelector('.large-text')
-    let largeTextScrollDistance = sizes.width - largeText.scrollWidth
 
     /**
      * Base
@@ -219,6 +342,7 @@ const app = () => {
             scene.add( group )
 
             scrollAnimation()
+            preloader(group)
         }
     )
 
@@ -295,7 +419,6 @@ const app = () => {
 
         // Animate camera
         camera.lookAt(0, 0, 0)
-        // camera.position.y = - scrollY / sizes.height * objectsDistance
 
         const parallaxX = cursor.x * 0.25
         const parallaxY = - cursor.y * 0.25
@@ -312,7 +435,7 @@ const app = () => {
     tick()
 
 
-    // gallery animation
+    // items price animation
     const items = gsap.utils.toArray('.store .elemnt')
 
     // define constatns
@@ -379,99 +502,9 @@ const app = () => {
     })
 }
 
-const preloader = () => {
-    // head title in animation
-    const headerTitle = document.querySelector('.intro h1')
-    const headerTitle_rows = [...headerTitle.children]
-    headerTitle_rows.forEach((titleRow) => {
-        splitAndWrapText(titleRow)
-    })
-    gsap.set('h1 .row span', { y: 100, opacity: 0, skewY: '10deg' })
-
-
-    const preloadTitle = document.querySelector('.preload__title') 
-    gsap.utils.toArray('.preload__title .row').forEach(el => {
-        // wrap title contetnt to span
-        splitAndWrapText( el )
-    })
-
-    const preloadTL = gsap.timeline()
-    preloadTL.fromTo('.preload__title .top', 
-        {
-            yPercent: 100
-        }, {
-            yPercent: 0,
-            ease: 'back.out',
-        }, 1
-    )
-    preloadTL.fromTo('.preload__title .bottom', 
-        {
-            yPercent: -100
-        }, {
-            yPercent: 0,
-            ease: 'back.out',
-        }, 1
-    )
-    preloadTL.fromTo('.preload__title .row', 
-        {
-            scale: 0.9
-        }, {
-            scale: 1,
-            ease: 'back.out',
-        }, 1
-    )
-
-    preloadTL.fromTo('.preload__title .bottom', 
-        {
-            xPercent: 0
-        }, {
-            xPercent: 100,
-            opacity: 0,
-            duration: 2,
-            ease: 'back.out',
-        }
-    )
-    preloadTL.fromTo('.preload__title .top', 
-        {
-            xPercent: 0
-        }, {
-            xPercent: -100,
-            opacity: 0,
-            duration: 2,
-            ease: 'back.out',
-        }, '<'
-    )
-    preloadTL.to('.preload__title .center', {
-            scale: 1.1,
-            duration: 2,
-            ease: 'pwer4.out',
-        }, '<'
-    )
-    preloadTL.fromTo('.preload',
-        {
-            clipPath: 'circle(120% at 50% 50%)',
-            filter: () => 'blur(0)'
-        }, {
-            clipPath: 'circle(0% at 50% -30%)',
-            filter: () => 'blur(0.4em)',
-            ease: 'power4.out',
-            duration: 1.4,
-        }
-    )
-    preloadTL.to('h1 .row span', {
-        y: 0,
-        opacity: 1,
-        skewY: 0,
-        ease: 'power3',
-        stagger: {
-            each: 0.05,
-        }
-    }, '>-=120%')
-}
-
 
 // RUN ON PAGE LOAD
 document.addEventListener("DOMContentLoaded", function() {
-    preloader()
+    preloadSetter()
     app()
 });
