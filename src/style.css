@@ -263,6 +263,7 @@ section:nth-child(odd)
 
 h1 *,
 .preload__title *,
+.preload__title .center .child,
 .button,
 .description,
 .large-text,
@@ -271,6 +272,10 @@ h1 *,
 figure, 
 figure img {
     will-change: transform;
+}
+.preload__title .center .child,
+.preload {
+    will-change: filter;
 }
 
 .preload {

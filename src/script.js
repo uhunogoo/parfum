@@ -125,7 +125,7 @@ const preloader = (model) => {
     preloadTL.fromTo('.preload',
         {
             clipPath: 'polygon(0% 0%, 100% 0%, 100% 150%, 0% 200%)',
-            filter: () => 'blur(0)'
+            filter: () => 'blur(0em)'
         }, {
             clipPath: 'polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)',
             filter: () => 'blur(0.4em)',
